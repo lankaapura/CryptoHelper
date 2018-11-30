@@ -1,4 +1,5 @@
 import java.nio.charset.Charset;
+
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -16,6 +17,12 @@ public class CryptoHelper {
     private static final int KEY_LENGTH = 256; // 256 bits
     private static final int ITERATIONS = 10000;
     private static final String ALGORITHM = "PBKDF2WithHmacSHA256";
+
+    public static void main(String args[]) {
+        String hash1 = "AQAAAAEAACcQAAAAEP0qJ7P9+LFOxCKz9qslO6Q578QnxWIqQ2HzdvDQwKecdezeC3yvQa578+yX9gB+Xg==";
+        boolean valid = VerifyHashedPassword("Donkey@1", hash1);
+        System.out.print(valid);
+    }
 
     public static boolean VerifyHashedPassword(String password, String expectedHash) {
         if (password == null) {
@@ -80,7 +87,7 @@ public class CryptoHelper {
         }
     }
 
-    public static String GenerateSaltedHash(String password) {
+    public static String HashPassword(String password) {
 
         byte[] salt = GenerateRadomSalt();
         byte[] pwdHash = CryptoHelper.HashPassword(password, salt);
